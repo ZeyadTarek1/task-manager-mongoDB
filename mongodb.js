@@ -22,43 +22,5 @@ MongoClient.connect(
 
         //create a database reference
         const db = client.db(databaseName);
-
-        //insert new document in a collection called Users
-        db.collection("Users").insertOne(
-            {
-                name: "Ziad",
-                age: 26,
-            },
-            (error, result) => {
-                if (error) {
-                    return console.log("Unable to insert");
-                }
-                console.log(result.insertedId);
-            }
-        );
-
-        //insert multiple documents in a new collection called Tasks
-        db.collection("Tasks").insertMany(
-            [
-                {
-                    description: "test",
-                    completed: true,
-                },
-                {
-                    description: "test2",
-                    completed: true,
-                },
-                {
-                    description: "test3",
-                    completed: false,
-                },
-            ],
-            (error, result) => {
-                if (error) {
-                    ("Unable to insert data");
-                }
-                console.log(result.insertedIds);
-            }
-        );
     }
 );
