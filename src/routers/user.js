@@ -18,6 +18,15 @@ router.get("/users/:id", async (req, res) => {
     }
 });
 
+router.get("/users/", async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.send(users);
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
 // process post requests and save to DB
 router.post("/users", async (req, res) => {
     const user = new User(req.body);
@@ -53,10 +62,15 @@ router.patch("/users/:id", async (req, res) => {
         return res.status(400).send({ error: "invalid update" });
     }
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        // const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        //     new: true,
+        //     runValidators: true,
+        // });
+
+        const user = await User.findById(req.params.id);
+        updates.forEach((update) => (user[update] = req.body[update]));
+        await user.save();
+
         if (!user) {
             return res.status(404).send();
         }
