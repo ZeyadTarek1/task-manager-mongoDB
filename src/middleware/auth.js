@@ -3,6 +3,8 @@ const User = require("../models/user.js");
 
 const auth = async (req, res, next) => {
     try {
+        console.log("auth");
+
         const token = req.header("Authorization").replace("Bearer ", "");
         const decoded = jwt.verify(token, "thisismynewcourse");
         // find user with this id and with a valid login token
@@ -10,7 +12,6 @@ const auth = async (req, res, next) => {
             _id: decoded._id,
             "tokens.token": token,
         });
-
         if (!user) {
             throw new Error();
         }

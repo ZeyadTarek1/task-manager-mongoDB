@@ -4,7 +4,7 @@ const auth = require("../middleware/auth.js");
 const router = new express.Router();
 
 // find specific user
-router.get("/users/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
     //fetch by paramater
 
     const _id = req.params.id;
@@ -19,14 +19,10 @@ router.get("/users/:id", async (req, res) => {
     }
 });
 
-// get all users
-router.get("/users/", auth, async (req, res) => {
-    try {
-        const users = await User.find({});
-        res.send(users);
-    } catch (e) {
-        res.status(500).send();
-    }
+// Read Profile
+router.get("/users/me", auth, async (req, res) => {
+    console.log("hi");
+    res.send(req.user);
 });
 
 // sign up
